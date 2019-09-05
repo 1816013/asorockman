@@ -8,7 +8,7 @@ Player::Player()
 {
 }
 
-Player::Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit)
+Player::Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit, DIR dir)
 {
 	animKey(ANIM_ID::STOP);
 	_pos = pos;
@@ -22,7 +22,7 @@ Player::Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit)
 	Init();
 	animStopCnt = 0;
 	_life = 10;
-
+	_dir = dir;
 }
 
 Player::~Player()
@@ -74,7 +74,7 @@ void Player::Draw(void)
 		}
 		if (_unit == UNIT::PLAYER2)
 		{
-			DrawGraph(600, 100 - (8 * i), IMAGE_ID("life")[0], false);
+			DrawGraph(684, 100 - (8 * i), IMAGE_ID("life")[0], false);
 		}
 	}
 	
@@ -184,22 +184,6 @@ void Player::P_Move(void)
 	// P1ˆÚ“®ˆ—
 	if (_unit == UNIT::PLAYER1)
 	{
-		if (_inputState->state(INPUT_ID::RIGHT).first && !_inputState->state(INPUT_ID::LEFT).first)
-		{
-			_velocity.x += 0.2;
-			_pRunF = true;
-			_dir = DIR::RIGHT;
-		}
-		if (_inputState->state(INPUT_ID::LEFT).first && !_inputState->state(INPUT_ID::RIGHT).first)
-		{
-			_pRunF = true;
-			_velocity.x -= 0.2;
-			_dir = DIR::LEFT;
-		}
-	}
-	// P2ˆÚ“®ˆ—
-	if (_unit == UNIT::PLAYER2)
-	{
 		if (_inputState->state(INPUT_ID::D).first && !_inputState->state(INPUT_ID::A).first)
 		{
 			_velocity.x += 0.2;
@@ -213,6 +197,24 @@ void Player::P_Move(void)
 			_dir = DIR::LEFT;
 		}
 	}
+	// P2ˆÚ“®ˆ—
+	if (_unit == UNIT::PLAYER2)
+	{
+		if (_inputState->state(INPUT_ID::RIGHT).first && !_inputState->state(INPUT_ID::LEFT).first)
+		{
+			_velocity.x += 0.2;
+			_pRunF = true;
+			_dir = DIR::RIGHT;
+		}
+		if (_inputState->state(INPUT_ID::LEFT).first && !_inputState->state(INPUT_ID::RIGHT).first)
+		{
+			_pRunF = true;
+			_velocity.x -= 0.2;
+			_dir = DIR::LEFT;
+		}
+	}
+
+	
 
 	// §ŒÀ‘¬“x
 	if (_velocity.x > 6)
@@ -349,17 +351,6 @@ void Player::P_Jump(void)
 	// ¼Þ¬ÝÌß
 	if (_unit == UNIT::PLAYER1)
 	{
-		if (_inputState->state(INPUT_ID::UP).first && _pJumpF)
-		{
-			_velocity.y = -10;
-		}
-		if (!_pJumpF || _inputState->state(INPUT_ID::UP).first && !shotAnim && DamStopCnt == 0)
-		{
-			animKey(ANIM_ID::JUMP);
-		}
-	}
-	if (_unit == UNIT::PLAYER2)
-	{
 		if (_inputState->state(INPUT_ID::W).first && _pJumpF)
 		{
 			_velocity.y = -10;
@@ -369,29 +360,24 @@ void Player::P_Jump(void)
 			animKey(ANIM_ID::JUMP);
 		}
 	}
+	if (_unit == UNIT::PLAYER2)
+	{
+		if (_inputState->state(INPUT_ID::UP).first && _pJumpF)
+		{
+			_velocity.y = -10;
+		}
+		if (!_pJumpF || _inputState->state(INPUT_ID::UP).first && !shotAnim && DamStopCnt == 0)
+		{
+			animKey(ANIM_ID::JUMP);
+		}
+	}
+	
 }
 
 void Player::P_Shot(void)
 {
 	// ¼®¯Ä
 	if (_unit == UNIT::PLAYER1)
-	{
-		if (_inputState->state(INPUT_ID::SHOT).first &~_inputState->state(INPUT_ID::SHOT).second)
-		{
-			if (_pJumpF && !_pRunF)
-			{
-				animKey(ANIM_ID::S_SHOT);
-			}
-			animStopCnt = 0;
-			_shotF = true;
-			shotAnim = true;
-		}
-		else
-		{
-			_shotF = false;
-		}
-	}
-	if (_unit == UNIT::PLAYER2)
 	{
 		if (_inputState->state(INPUT_ID::SHIFT).first &~_inputState->state(INPUT_ID::SHIFT).second)
 		{
@@ -408,6 +394,24 @@ void Player::P_Shot(void)
 			_shotF = false;
 		}
 	}
+	if (_unit == UNIT::PLAYER2)
+	{
+		if (_inputState->state(INPUT_ID::SHOT).first &~_inputState->state(INPUT_ID::SHOT).second)
+		{
+			if (_pJumpF && !_pRunF)
+			{
+				animKey(ANIM_ID::S_SHOT);
+			}
+			animStopCnt = 0;
+			_shotF = true;
+			shotAnim = true;
+		}
+		else
+		{
+			_shotF = false;
+		}
+	}
+	
 
 	// ¼®¯Ä‚Ì±ÆÒ°¼®Ý
 	if (shotAnim && DamStopCnt == 0)

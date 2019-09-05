@@ -4,7 +4,6 @@
 #include <memory>
 #include "Collision.h"
 
-
 enum class OFFSET
 {
 	LEFT_UP,
@@ -23,7 +22,7 @@ class Player :
 {
 public:
 	Player();
-	Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit);
+	Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit, DIR dir);
 	~Player();
 
 private:

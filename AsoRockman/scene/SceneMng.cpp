@@ -29,11 +29,18 @@ void SceneMng::Run()
 	SET_IMAGE_ID("damage_player", "image/damage.png");
 	SET_IMAGE_ID("damage_player2", "image/damage2.png");
 
+	SET_IMAGE_ID("player1_win", "image/player1win.png");
+	SET_IMAGE_ID("player2_win", "image/player2win.png");
+	SET_IMAGE_ID("ˆø‚«•ª‚¯", "image/Draw.png");
+
 	SET_IMAGE_DIV_ID("effect", "image/tobichiri2.png", Vector2(6, 1), Vector2(16, 16));
 
 	SET_IMAGE_ID("’e", "image/shot1.png");
 	SET_IMAGE_ID("’e2", "image/shot2.png");
 	SET_IMAGE_ID("life", "image/life2.png");
+
+	SET_IMAGE_ID("¹Þ°Ñµ°ÊÞ°", "image/gameover.png");
+	SET_IMAGE_ID("Ã·½Ä", "image/hitstartkey.png");
 	
 
 	_activeScene = std::make_unique<TitleScene>();

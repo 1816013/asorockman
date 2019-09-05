@@ -12,8 +12,8 @@ public:
 	void Draw(void)override;
 	SCN_ID NextScnID(void)override;			// Ÿ‚Ì¼°İID‚ğæ“¾‚·‚é
 private:
-	int waitTime;
-	int _ghGameoverScreen;
+	int waitTime;							// À²ÄÙ¼°İ‚ÉˆÚs‚·‚éÀ²Ğİ¸Ş—p¶³İÀ
+	int _ghGameoverScreen;					// ¹Ş°Ñµ°ÊŞ°—p½¸Ø°İ
 	std::unique_ptr<InputState> _key;
 };
 

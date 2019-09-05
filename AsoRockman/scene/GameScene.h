@@ -21,8 +21,9 @@ public:
 	SCN_ID NextScnID(void)override;					// Ÿ‚Ì¼°İID‚ğæ“¾‚·‚é
 private:
 	void Draw(void)override;	// •`‰æ
-	void effectInstance(ef_state state);
-	int _p_cnt;
+	void effectInstance(ef_state state);	// ´Ìª¸Ä‚Ì²İ½Àİ½
+	int _p_cnt;		// ¶‚«‚Ä‚¢‚é·¬×‚Ì”
+	int _clearwait;	// ¸Ø±•\¦ŒãÌÚ°Ñ
 
 	int _ghGameScreen;	// ¹Ş°Ñ’†‚Ì½¸Ø°İ
 	std::unique_ptr<map>_map;	

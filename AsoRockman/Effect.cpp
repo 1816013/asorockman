@@ -25,8 +25,8 @@ Effect::~Effect()
 
 void Effect::Update(void)
 {
-	_pos.x += cos(_angle * DX_PI / 180) * _speed;
-	_pos.y += sin(_angle * DX_PI / 180) * _speed;
+	_pos.x += cos(_angle * DX_PI / 180) * _speed * 2;
+	_pos.y += sin(_angle * DX_PI / 180) * _speed * 2;
 
 	_id++;
 	if (_id / 3 > 5)
@@ -37,6 +37,6 @@ void Effect::Update(void)
 
 void Effect::Draw(void)
 {
-	DrawRotaGraph(_pos.x, _pos.y,2.0, 0.0, IMAGE_ID("effect")[_id / 3], true);
+	DrawRotaGraph(_pos.x, _pos.y,2.5, 0.0, IMAGE_ID("effect")[_id / 3], true);
 	
 }

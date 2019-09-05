@@ -44,5 +44,6 @@ void TitleScene::Draw(void)
 	// ‚±‚±‚©‚çÀ²ÄÙ¼°Ý‚Ì•`‰æ
 	DrawGraph(0, 0, IMAGE_ID("title")[0], false);
 	DrawString(0, 0, "TITLE SCENE", 0xffffff);
+	DrawGraph(220, 400, IMAGE_ID("Ã·½Ä")[0], true);
 	SetDrawScreen(ghbefor);
 }

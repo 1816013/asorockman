@@ -32,10 +32,10 @@ enum class UNIT
 	MAX
 };
 
-enum class DIR
+enum class DIR // Œü‚«
 {
-	RIGHT,
-	LEFT,
+	RIGHT,	// ‰E
+	LEFT,	// ¶
 	MAX
 };
 

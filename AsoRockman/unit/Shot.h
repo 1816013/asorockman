@@ -6,13 +6,13 @@
 
 enum class ShotState
 {
-	POS,
-	SIZE,
-	DIR,
-	RUN_F,
-	JUMP_F,
-	P_TYPE,
-	M_CHIP
+	POS,		// À•W
+	SIZE,		// ‘å‚«‚³
+	DIR,		// Œü‚«
+	RUN_F,		// ‘–‚Á‚Ä‚¢‚é‚©
+	JUMP_F,		// ¼Þ¬ÝÌß‚µ‚Ä‚¢‚é‚©
+	P_TYPE,		// ‚Ç‚ÌÌßÚ²Ô°‚ªŒ‚‚Á‚½‚©
+	M_CHIP		// Ï¯Ìßî•ñ
 };
 
 using s_state = std::tuple<Vector2, Vector2, DIR, bool, bool, UNIT>;

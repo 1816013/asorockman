@@ -14,20 +14,8 @@ GameScene::GameScene()
 	_scnID = SCN_ID::GAME;
 	_map = std::make_unique<map>();
 	_col = std::make_shared<Collision>();
-	_objlist.emplace_back(new Player({ 100, 50 }, { 32, 32 }, _map->GetMapChip(), UNIT::PLAYER1));
-	_objlist.emplace_back(new Player({ 200, 50 }, { 32, 32 }, _map->GetMapChip(), UNIT::PLAYER2));
-	/*_effectList.emplace_back(new Effect({ 200, 100 }, 0 , 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 0 , 0.5));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 90, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 90, 0.5));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 180, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 180, 0.5));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 270, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 270, 0.5));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 45, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 135, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 225, 1));
-	_effectList.emplace_back(new Effect({ 200, 100 }, 315, 1));*/
+	_objlist.emplace_back(new Player({ 100, 440 }, { 32, 32 }, _map->GetMapChip(), UNIT::PLAYER1, DIR::RIGHT));
+	_objlist.emplace_back(new Player({ 684, 440 }, { 32, 32 }, _map->GetMapChip(), UNIT::PLAYER2, DIR::LEFT));
 }
 
 GameScene::~GameScene()
@@ -65,20 +53,21 @@ unique_base GameScene::Update(unique_base own)
 								  [](shared_Obj obj) { return (*obj).isDeath(); }),
 								  _objlist.end());
 
-	auto p_cnt = std::count_if(_objlist.begin(),
+	_p_cnt = std::count_if(_objlist.begin(),
 							   _objlist.end(),
 							   [](shared_Obj obj) {return ((*obj).GetUnit() == UNIT::PLAYER1 
 													   || (*obj).GetUnit() == UNIT::PLAYER2)
 													   && (*obj).isAlive() == true; });
 
-	if (p_cnt < 2)
+	if (_p_cnt < 2)
 	{
+		_clearwait++;
 		for (auto itr : _objlist)
 		{
 			if ((itr->GetUnit() == UNIT::PLAYER1 || itr->GetUnit() == UNIT::PLAYER2) && itr->isAlive() == false)
 			{
 				Vector2 pos = itr->pos();
-				if (_effectList.size() < 12 * (2 - p_cnt))
+				if (_effectList.size() < 12 * (2 - _p_cnt))
 				{
 					effectInstance({ pos.x, pos.y , 0 , 1 });
 					effectInstance({ pos.x, pos.y , 0, 0.5 });
@@ -96,6 +85,13 @@ unique_base GameScene::Update(unique_base own)
 			}
 		}
 	}
+	if (_clearwait > 200)
+	{
+		_scnID = SCN_ID::GAMEOVER;
+	}
+
+
+
 	Draw();
 	return own;
 }
@@ -126,8 +122,25 @@ void GameScene::Draw(void)
 	{
 		itr->Obj::Draw();
 		itr->Draw();
+		if (_p_cnt < 2)
+		{
+			if (itr->isAlive() == true)
+			{
+				if (itr->GetUnit() == UNIT::PLAYER1)
+				{
+					DrawGraph(180, 100, IMAGE_ID("player1_win")[0], true);
+				}
+				if (itr->GetUnit() == UNIT::PLAYER2)
+				{
+					DrawGraph(180, 100, IMAGE_ID("player2_win")[0], true);
+				}
+			}
+			if (_p_cnt == 0)
+			{
+				DrawGraph(292, 100, IMAGE_ID("ˆø‚«•ª‚¯")[0], true);
+			}
+		}
 	}
-	
 	DrawString(0, 50, "GAME SCENE", 0xffffff);
 	SetDrawScreen(ghbefor);
 }

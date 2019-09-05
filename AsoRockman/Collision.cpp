@@ -12,7 +12,7 @@ Collision::~Collision()
 
 bool Collision::WallCol(Vector2 n_pos, std::vector<int> m_chip)
 {
-	int index = n_pos.x / 32 + n_pos.y / 32 * 48 ;
+	int index = n_pos.x / 32 + n_pos.y  / 32 * 48 ;
 	if (m_chip[index] == 8 || m_chip[index] == 10)
 	{
 		return false;

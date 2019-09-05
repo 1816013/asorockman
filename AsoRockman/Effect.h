@@ -6,10 +6,10 @@
 
 enum class EF_STATE
 {
-	POS_X,
-	POS_Y,
-	ANGLE,
-	SPEED,
+	POS_X,	// X座標
+	POS_Y,	// Y座標
+	ANGLE,	// 角度
+	SPEED,	// 速度
 	MAX
 };
 class Effect;
@@ -22,13 +22,13 @@ public:
 	Effect();
 	Effect(ef_state);
 	~Effect();
-	void Update(void);
-	void Draw(void);
+	void Update(void);	// ｴﾌｪｸﾄの移動
+	void Draw(void);	// 描画
 private:
-	Vector2_D _pos;
-	double _speed;
-	double _angle;
-	int _id;
-	int waitC;
+	Vector2_D _pos;		// ｴﾌｪｸﾄの座標
+	double _speed;		// ｴﾌｪｸﾄのｽﾋﾟｰﾄﾞ
+	double _angle;		// ｴﾌｪｸﾄの飛ぶ角度
+	int _id;			// ｴﾌｪｸﾄの画像のID
+	int waitC;			// ｴﾌｪｸﾄのｱﾆﾒｰｼｮﾝの待機ｶｳﾝﾀ
 };
 
