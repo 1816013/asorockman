@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="scene\GameoverScene.cpp" />
     <ClCompile Include="ImageMng.cpp" />
     <ClCompile Include="Input\InputState.cpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="scene\GameoverScene.h" />
     <ClInclude Include="ImageMng.h" />
     <ClInclude Include="Input\InputState.h" />

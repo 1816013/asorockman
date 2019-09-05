@@ -31,6 +31,10 @@ Player::~Player()
 
 void Player::Update(void)
 {
+	if (!_alive)
+	{
+		return;
+	}
 	_inputState->Update();
 	P_Move();
 	P_Jump();
@@ -38,7 +42,24 @@ void Player::Update(void)
 	
 	if (_life <= 0)
 	{
-		_death = true;
+		_alive = false;
+	}
+	if (CheckHitKey(KEY_INPUT_DELETE))
+	{
+		_alive = false;
+	}
+	if (_colF || DamStopCnt > 0)
+	{
+		DamStopCnt++;
+		animKey(ANIM_ID::DAMAGE);
+		if (DamStopCnt > 10)
+		{
+			DamStopCnt = 0;
+		}
+	}
+	else
+	{
+		DamStopCnt = 0;
 	}
 }
 
@@ -71,9 +92,6 @@ bool Player::Init(void)
 		for (int i = 0; i < 4; i++)
 		{
 			data.emplace_back(IMAGE_ID("run_player")[i], 10 * (i + 1));
-			/*data.emplace_back(IMAGE_ID("run_player")[1], 20);
-			data.emplace_back(IMAGE_ID("run_player")[2], 30);
-			data.emplace_back(IMAGE_ID("run_player")[3], 40);*/
 		}
 		SetAnim(ANIM_ID::RUN, data);
 
@@ -86,14 +104,14 @@ bool Player::Init(void)
 		for (int i = 0; i < 4; i++)
 		{
 			data.emplace_back(IMAGE_ID("rShot_player")[i], 10 * (i + 1));
-			/*data.emplace_back(IMAGE_ID("rShot_player")[1], 20);
-			data.emplace_back(IMAGE_ID("rShot_player")[2], 30);
-			data.emplace_back(IMAGE_ID("rShot_player")[3], 40);*/
 		}
 		SetAnim(ANIM_ID::R_SHOT, data);
 
 		data.emplace_back(IMAGE_ID("jShot_player")[0], 0);
 		SetAnim(ANIM_ID::J_SHOT, data);
+
+		data.emplace_back(IMAGE_ID("damage_player")[0], 0);
+		SetAnim(ANIM_ID::DAMAGE, data);
 	}
 	if (_unit == UNIT::PLAYER2)
 	{
@@ -103,9 +121,6 @@ bool Player::Init(void)
 		for (int i = 0; i < 4; i++)
 		{
 			data.emplace_back(IMAGE_ID("run_player2")[i], 10 * (i + 1));
-			/*data.emplace_back(IMAGE_ID("run_player")[1], 20);
-			data.emplace_back(IMAGE_ID("run_player")[2], 30);
-			data.emplace_back(IMAGE_ID("run_player")[3], 40);*/
 		}
 		SetAnim(ANIM_ID::RUN, data);
 
@@ -118,14 +133,15 @@ bool Player::Init(void)
 		for (int i = 0; i < 4; i++)
 		{
 			data.emplace_back(IMAGE_ID("rShot_player2")[i], 10 * (i + 1));
-			/*data.emplace_back(IMAGE_ID("rShot_player")[1], 20);
-			data.emplace_back(IMAGE_ID("rShot_player")[2], 30);
-			data.emplace_back(IMAGE_ID("rShot_player")[3], 40);*/
 		}
 		SetAnim(ANIM_ID::R_SHOT, data);
 
 		data.emplace_back(IMAGE_ID("jShot_player2")[0], 0);
 		SetAnim(ANIM_ID::J_SHOT, data);
+
+		data.emplace_back(IMAGE_ID("damage_player2")[0], 0);
+		SetAnim(ANIM_ID::DAMAGE, data);
+
 	}
 	return true;
 }
@@ -208,7 +224,7 @@ void Player::P_Move(void)
 		_velocity.x = -6.0f;
 	}
 	// Œ¸‘¬ˆ—
-	if (_pRunF && !shotAnim)
+	if (_pRunF && !shotAnim &&  DamStopCnt == 0)
 	{
 		animKey(ANIM_ID::RUN);
 	}
@@ -325,6 +341,7 @@ void Player::P_Move(void)
 	next_pos = _pos;
 
 	
+	
 }
 
 void Player::P_Jump(void)
@@ -336,7 +353,7 @@ void Player::P_Jump(void)
 		{
 			_velocity.y = -10;
 		}
-		if (!_pJumpF || _inputState->state(INPUT_ID::UP).first && !shotAnim)
+		if (!_pJumpF || _inputState->state(INPUT_ID::UP).first && !shotAnim && DamStopCnt == 0)
 		{
 			animKey(ANIM_ID::JUMP);
 		}
@@ -347,7 +364,7 @@ void Player::P_Jump(void)
 		{
 			_velocity.y = -10;
 		}
-		if (!_pJumpF || _inputState->state(INPUT_ID::W).first && !shotAnim)
+		if (!_pJumpF || _inputState->state(INPUT_ID::W).first && !shotAnim && DamStopCnt == 0)
 		{
 			animKey(ANIM_ID::JUMP);
 		}
@@ -393,7 +410,7 @@ void Player::P_Shot(void)
 	}
 
 	// ¼®¯Ä‚Ì±ÆÒ°¼®Ý
-	if (shotAnim)
+	if (shotAnim && DamStopCnt == 0)
 	{
 		animStopCnt++;
 		if (_pJumpF && !_pRunF)

@@ -33,7 +33,7 @@ private:
 	UNIT GetUnit(void)override;		// ﾕﾆｯﾄのﾀｲﾌﾟ取得
 	void SetOffset(Vector2 pos, Vector2 size);	// ｵﾌｾｯﾄ座標の取得
 	void P_Move(void);		// ﾌﾟﾚｲﾔｰの動作(後で分割予定)
-	void P_Jump(void);
+	void P_Jump(void);		// ﾌﾟﾚｲﾔｰのｼﾞｬﾝﾌﾟ
 	void P_Shot(void);		// ﾌﾟﾚｲﾔｰのｼｮｯﾄ
 
 	//----- 変数 ------
@@ -43,6 +43,7 @@ private:
 	float G = 0.5f;		// 重力
 	bool shotAnim;		// 射撃のｱﾆﾒｰｼｮﾝがonかoffか
 	int animStopCnt;	// 射撃ｱﾆﾒｰｼｮﾝ停止用ｶｳﾝﾀ
+	int DamStopCnt;		// ﾀﾞﾒｰｼﾞｱﾆﾒｰｼｮﾝ停止用ｶｳﾝﾀ
 
 	std::unique_ptr<InputState> _inputState;	// ｷｰ入力用
 	std::vector<Vector2> _offsetPos;	// ｵﾌｾｯﾄ用の座標

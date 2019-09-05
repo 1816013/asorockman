@@ -50,7 +50,7 @@ void map::Draw(void)
 	{
 		for (int x = 0; x < 48; x++)
 		{
-			DrawGraph(x * 32 - _m_pos.x, y * 32 - _m_pos.y, IMAGE_ID("map")[_mapChip[y * 48 + x]], false);
+			DrawRotaGraph(x * 32 - _m_pos.x + 16, y * 32 - _m_pos.y + 16,1.0, 0.0, IMAGE_ID("map")[_mapChip[y * 48 + x]], false);
 		}
 	}
 }

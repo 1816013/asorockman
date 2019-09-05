@@ -26,6 +26,10 @@ void SceneMng::Run()
 	SET_IMAGE_DIV_ID("rShot_player2", "image/run_shot2.png", Vector2(4, 1), Vector2(96, 64));
 	SET_IMAGE_ID("jShot_player", "image/jump_shot.png");
 	SET_IMAGE_ID("jShot_player2", "image/jump_shot2.png");
+	SET_IMAGE_ID("damage_player", "image/damage.png");
+	SET_IMAGE_ID("damage_player2", "image/damage2.png");
+
+	SET_IMAGE_DIV_ID("effect", "image/tobichiri2.png", Vector2(6, 1), Vector2(16, 16));
 
 	SET_IMAGE_ID("’e", "image/shot1.png");
 	SET_IMAGE_ID("’e2", "image/shot2.png");

@@ -19,6 +19,7 @@ enum class ANIM_ID
 	R_SHOT,	// 移動射撃
 	J_SHOT,	// ｼﾞｬﾝﾌﾟ射撃
 	JUMP,	// ｼﾞｬﾝﾌﾟ
+	DAMAGE,	// ﾀﾞﾒｰｼﾞを受けたとき
 	MAX
 };
 
@@ -53,6 +54,7 @@ public:
 	bool animKey(const ANIM_ID key);		// _animKeyの設定
 	bool SetAnim(const ANIM_ID key, AnimVector& data);// ｱﾆﾒｰｼｮﾝの設定
 	bool isShotF(void) { return _shotF; };		// 撃っているかいないかを取得する
+	bool isAlive(void) { return _alive; };		// 体力が0になったかなっていないか			
 	bool isDeath(void) { return _death; };		// 死んでいるか死んでいないかを取得する
 	void Decreaselife(void) { _life--; };		// 体力を1減少させる
 	Vector2 pos(void) { return _pos; };			// 座標を取得
@@ -77,6 +79,7 @@ protected:
 	VecInt _mapC;	// ﾏｯﾌﾟ情報
 	DIR _dir;		// ｵﾌﾞｼﾞｪｸﾄの向き
 	bool _shotF;	// 弾を打ったか打っていないか
+	bool _alive;	// 体力が0になったかなっていないか
 	bool _death;	// 死んだか死んでないか
 	bool _pRunF;	// ｷｬﾗが走っているかいないか
 	bool _pJumpF;	// ｷｬﾗがｼﾞｬﾝﾌﾟ可能か不可能か

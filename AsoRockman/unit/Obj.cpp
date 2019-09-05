@@ -7,6 +7,7 @@ Obj::Obj()
 {
 	_dir = DIR::RIGHT;
 	_death = false;
+	_alive = true;
 }
 
 Obj::~Obj()
@@ -20,6 +21,10 @@ void Obj::Draw(void)
 		return;
 	}
 	if (_animMap[_animKey].size() <= _animFrame)
+	{
+		return;
+	}
+	if (!_alive)
 	{
 		return;
 	}

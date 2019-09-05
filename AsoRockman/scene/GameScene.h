@@ -6,6 +6,10 @@
 #include "map.h"
 #include <unit/Shot.h>
 #include "Collision.h"
+#include "Effect.h"
+
+
+
 class GameScene :
 	public BaseScene
 {
@@ -17,10 +21,14 @@ public:
 	SCN_ID NextScnID(void)override;					// ŽŸ‚Ì¼°ÝID‚ðŽæ“¾‚·‚é
 private:
 	void Draw(void)override;	// •`‰æ
+	void effectInstance(ef_state state);
+	int _p_cnt;
+
 	int _ghGameScreen;	// ¹Þ°Ñ’†‚Ì½¸Ø°Ý
 	std::unique_ptr<map>_map;	
 	std::vector<shared_Obj>_objlist;	
 	std::vector<s_state>_shotlist;
 	std::shared_ptr<Collision>_col;
+	std::vector<shared_effect> _effectList;
 };
 

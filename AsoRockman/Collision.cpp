@@ -37,30 +37,33 @@ bool Collision::Judgment(std::vector<shared_Obj>& list)
 			{
 				auto pos = other_itr->pos();
 				auto size = other_itr->size();
-				if (!(_pos.x - _size.x / 2 > pos.x + size.x / 2
-					|| _pos.x + _size.x / 2 < pos.x - size.x / 2
-					|| _pos.y - _size.y / 2 > pos.y + size.y / 2
-					|| _pos.y + _size.y / 2 < pos.y - size.y / 2)
-					)
+				if (itr->isAlive() && other_itr->isAlive())
 				{
-					itr->SetColF(true);
-					other_itr->SetColF(true);
-					if (_unit == UNIT::SHOT && unit != UNIT::PLAYER1)
+					if (!(_pos.x - _size.x / 2 > pos.x + size.x / 2
+						|| _pos.x + _size.x / 2 < pos.x - size.x / 2
+						|| _pos.y - _size.y / 2 > pos.y + size.y / 2
+						|| _pos.y + _size.y / 2 < pos.y - size.y / 2)
+						)
 					{
-						tmpList.erase(std::remove_if(tmpList.begin(),
-										tmpList.end(),
-							[](shared_Obj obj) { return (*obj).isColF() == false; }),
-										tmpList.end());
+						itr->SetColF(true);
+						other_itr->SetColF(true);
+						if (_unit == UNIT::SHOT && unit != UNIT::PLAYER1)
+						{
+							tmpList.erase(std::remove_if(tmpList.begin(),
+								tmpList.end(),
+								[](shared_Obj obj) { return (*obj).isColF() == false; }),
+								tmpList.end());
+						}
+						if (_unit == UNIT::SHOT2 && unit != UNIT::PLAYER2)
+						{
+							tmpList.erase(std::remove_if(tmpList.begin(),
+								tmpList.end(),
+								[](shared_Obj obj) { return (*obj).isColF() == false; }),
+								tmpList.end());
+
+						}
+						colF = true;
 					}
-					if (_unit == UNIT::SHOT2 && unit != UNIT::PLAYER2)
-					{
-						tmpList.erase(std::remove_if(tmpList.begin(),
-							tmpList.end(),
-							[](shared_Obj obj) { return (*obj).isColF() == false; }),
-							tmpList.end());
-						
-					}
-					colF = true;
 				}
 			}
 		}
