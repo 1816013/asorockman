@@ -18,7 +18,7 @@ Player::Player(Vector2 pos, Vector2 size, const VecInt mapC, UNIT unit, DIR dir)
 	_velocity = { 0 , 0 };
 	_pJumpF = false;
 	_inputState = std::make_unique<KeyState>();
-	SetOffset(_pos, _size);
+	//SetOffset(_pos, _size);
 	Init();
 	animStopCnt = 0;
 	_life = 10;
@@ -36,6 +36,7 @@ void Player::Update(void)
 		return;
 	}
 	_inputState->Update();
+	P_Input();
 	P_Move();
 	P_Jump();
 	P_Shot();
@@ -74,7 +75,7 @@ void Player::Draw(void)
 		}
 		if (_unit == UNIT::PLAYER2)
 		{
-			DrawGraph(684, 100 - (8 * i), IMAGE_ID("life")[0], false);
+			DrawGraph(684 - 28, 100 - (8 * i), IMAGE_ID("life")[0], false);
 		}
 	}
 	
@@ -151,36 +152,28 @@ UNIT Player::GetUnit(void)
 	return _unit;
 }
 
-void Player::SetOffset(Vector2 pos, Vector2 size)
+//void Player::SetOffset(Vector2 pos, Vector2 size)
+//{
+//	// 左上
+//	_offsetPos.emplace_back( Vector2(pos.x - size.x / 2, pos.y - size.y / 2 ));
+//	// 上
+//	_offsetPos.emplace_back(Vector2(pos.x, pos.y - size.y / 2));
+//	// 右上
+//	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y - size.y / 2));
+//	// 左
+//	_offsetPos.emplace_back(Vector2(pos.x - size.x / 2, pos.y ));
+//	// 右
+//	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y));
+//	// 左下
+//	_offsetPos.emplace_back(Vector2(pos.x - size.x / 2, pos.y + size.y / 2));
+//	// 下
+//	_offsetPos.emplace_back(Vector2(pos.x, pos.y + size.y / 2));
+//	// 右下
+//	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y + size.y / 2));
+//}
+
+void Player::P_Input(void)
 {
-	// 左上
-	_offsetPos.emplace_back( Vector2(pos.x - size.x / 2, pos.y - size.y / 2 ));
-	// 上
-	_offsetPos.emplace_back(Vector2(pos.x, pos.y - size.y / 2));
-	// 右上
-	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y - size.y / 2));
-	// 左
-	_offsetPos.emplace_back(Vector2(pos.x - size.x / 2, pos.y ));
-	// 右
-	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y));
-	// 左下
-	_offsetPos.emplace_back(Vector2(pos.x - size.x / 2, pos.y + size.y / 2));
-	// 下
-	_offsetPos.emplace_back(Vector2(pos.x, pos.y + size.y / 2));
-	// 右下
-	_offsetPos.emplace_back(Vector2(pos.x + size.x / 2, pos.y + size.y / 2));
-}
-
-void Player::P_Move(void)
-{
-	Vector2 next_pos = _pos;
-
-	Vector2 offsetPos = _pos;
-	Vector2 offsetPos2 = offsetPos;
-	Vector2 offsetPos3 = offsetPos;
-
-	_pJumpF = false;
-	_pRunF = false;
 	// P1移動処理
 	if (_unit == UNIT::PLAYER1)
 	{
@@ -213,8 +206,6 @@ void Player::P_Move(void)
 			_dir = DIR::LEFT;
 		}
 	}
-
-	
 
 	// 制限速度
 	if (_velocity.x > 6)
@@ -250,6 +241,19 @@ void Player::P_Move(void)
 			}
 		}
 	}
+}
+
+void Player::P_Move(void)
+{
+	Vector2 next_pos = _pos;
+
+	Vector2 offsetPos = _pos;
+	Vector2 offsetPos2 = offsetPos;
+	Vector2 offsetPos3 = offsetPos;
+
+	_pJumpF = false;
+	_pRunF = false;
+	
 	// xの変化
 	next_pos.x += _velocity.x;
 	// -------- 左右 ----------
@@ -340,10 +344,7 @@ void Player::P_Move(void)
 		_pos.y = index * 32;
 		_velocity.y *= -1;
 	}
-	next_pos = _pos;
-
-	
-	
+	next_pos = _pos;	
 }
 
 void Player::P_Jump(void)

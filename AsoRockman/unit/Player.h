@@ -4,17 +4,17 @@
 #include <memory>
 #include "Collision.h"
 
-enum class OFFSET
-{
-	LEFT_UP,
-	UP,
-	RIGHT_UP,
-	LEFT_MIDDLE,
-	RIGHT_MIDDLE,
-	LEFT_DOWN,
-	DOWN,
-	RIGHT_DOWN
-};
+//enum class OFFSET
+//{
+//	LEFT_UP,
+//	UP,
+//	RIGHT_UP,
+//	LEFT_MIDDLE,
+//	RIGHT_MIDDLE,
+//	LEFT_DOWN,
+//	DOWN,
+//	RIGHT_DOWN
+//};
 
 
 class Player :
@@ -30,7 +30,8 @@ private:
 	void Draw(void)override;	// 描画
 	bool Init(void)override;	// 初期化関数(主に画像設定)
 	UNIT GetUnit(void)override;		// ﾕﾆｯﾄのﾀｲﾌﾟ取得
-	void SetOffset(Vector2 pos, Vector2 size);	// ｵﾌｾｯﾄ座標の取得
+	// void SetOffset(Vector2 pos, Vector2 size);	// ｵﾌｾｯﾄ座標の取得
+	void P_Input(void);		// ﾌﾟﾚｲﾔｰの移動ｷｰ入力
 	void P_Move(void);		// ﾌﾟﾚｲﾔｰの動作(後で分割予定)
 	void P_Jump(void);		// ﾌﾟﾚｲﾔｰのｼﾞｬﾝﾌﾟ
 	void P_Shot(void);		// ﾌﾟﾚｲﾔｰのｼｮｯﾄ
@@ -45,7 +46,7 @@ private:
 	int DamStopCnt;		// ﾀﾞﾒｰｼﾞｱﾆﾒｰｼｮﾝ停止用ｶｳﾝﾀ
 
 	std::unique_ptr<InputState> _inputState;	// ｷｰ入力用
-	std::vector<Vector2> _offsetPos;	// ｵﾌｾｯﾄ用の座標
+	//std::vector<Vector2> _offsetPos;	// ｵﾌｾｯﾄ用の座標
 	std::shared_ptr<Collision>_col;
 };
 
