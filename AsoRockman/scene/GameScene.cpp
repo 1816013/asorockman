@@ -141,7 +141,7 @@ void GameScene::Draw(void)
 			}
 		}
 	}
-	DrawString(0, 50, "GAME SCENE", 0xffffff);
+	//DrawString(0, 50, "GAME SCENE", 0xffffff);
 	SetDrawScreen(ghbefor);
 }
 

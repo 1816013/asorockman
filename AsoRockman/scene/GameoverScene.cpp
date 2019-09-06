@@ -41,7 +41,7 @@ void GameoverScene::Draw(void)
 	SetDrawScreen(_ghGameoverScreen);
 	ClsDrawScreen();
 	// ‚±‚±‚©‚ç¹Þ°Ñµ°ÊÞ°¼°Ý‚Ì•`‰æ
-	DrawString(0, 0, "GAMEOVER SCENE", 0xffffff);
+	//DrawString(0, 0, "GAMEOVER SCENE", 0xffffff);
 	DrawGraph(170, 150, IMAGE_ID("¹Þ°Ñµ°ÊÞ°")[0], true);
 	SetDrawScreen(ghbefor);
 }
